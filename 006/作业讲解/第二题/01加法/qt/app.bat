@@ -1,0 +1,1 @@
+D:\ruanjian\qt5\5.14.2\mingw73_64\bin\windeployqt.exe    SerialQt.exe
