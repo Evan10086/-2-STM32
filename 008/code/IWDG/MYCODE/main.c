@@ -66,7 +66,7 @@ int main(void)
 	NVIC_PriorityGroupConfig(NVIC_PriorityGroup_2);
 	Delay_Init();	
 	Led_Init();
-
+	Exti_PA0_Init();
 	Usart1_Init(115200);
 	Dht11_Init();
 	Iwdg_Init();
