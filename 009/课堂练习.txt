@@ -1,0 +1,16 @@
+1、参考adc代码，将实际测量的电压值打印出来。
+
+
+2、参考下面代码，将写入flash数据读取出来
+
+
+00145   uwAddress = FLASH_USER_START_ADDR;
+
+00147   
+00148   while (uwAddress < FLASH_USER_END_ADDR)
+00149   {
+00150     uwData32 = *(__IO uint32_t*)uwAddress;
+00151 
+00156 
+00157     uwAddress = uwAddress + 4;
+00158   }  
