@@ -8,8 +8,4 @@ void Rtc_My_Init(void);
 
 void RTC_Alarm_AInit(void);
 
-void RTC_Alarm_BInit(void);
-
-void RTC_Alarm_B_IRQHandler(void);
-
 #endif

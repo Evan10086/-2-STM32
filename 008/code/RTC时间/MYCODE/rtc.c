@@ -1,6 +1,6 @@
 #include "rtc.h"
 
-#define BKP   0x228101
+#define BKP   0x22819
 
 
 void Rtc_My_Init(void)

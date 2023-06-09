@@ -71,7 +71,6 @@ int main(void)
 
 	Rtc_My_Init();
 	RTC_Alarm_AInit();
-	RTC_Alarm_BInit();
 	
 	
 	

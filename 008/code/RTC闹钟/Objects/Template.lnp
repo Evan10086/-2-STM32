@@ -1,4 +1,4 @@
---cpu Cortex-M4.fp
+--cpu=Cortex-M4.fp
 ".\objects\main.o"
 ".\objects\led.o"
 ".\objects\key.o"
@@ -24,6 +24,6 @@
 ".\objects\startup_stm32f40_41xxx.o"
 ".\objects\system_stm32f4xx.o"
 --strict --scatter ".\Objects\Template.sct"
---summary_stderr --info summarysizes --map --xref --callgraph --symbols
+--summary_stderr --info summarysizes --map --load_addr_map_info --xref --callgraph --symbols
 --info sizes --info totals --info unused --info veneers
 --list ".\Listings\Template.map" -o .\Objects\Template.axf

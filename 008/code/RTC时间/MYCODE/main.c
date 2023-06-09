@@ -20,7 +20,8 @@ u8 rx_buffer[16] = {0};
 u8 rx_i, count = 0;
 u8 rx_flag = 0;
 
-
+RTC_TimeTypeDef		RTC_TimeStruct;
+RTC_DateTypeDef		RTC_DateStruct;
 
 
 void USART1_IRQHandler(void)
@@ -58,8 +59,7 @@ void USART1_IRQHandler(void)
 int main(void)
 {
 	
-	RTC_TimeTypeDef		RTC_TimeStruct;
-	RTC_DateTypeDef		RTC_DateStruct;
+
 	
 	u8 year,month,date,hour,min,sec,weekday;
 	//设置NVIC分组 一个工程,NVIC只能分组一次
@@ -74,22 +74,24 @@ int main(void)
 	
 	while(1)
 	{
-		
-		RTC_GetTime(RTC_Format_BIN,&RTC_TimeStruct);
 		RTC_GetDate(RTC_Format_BIN,&RTC_DateStruct);
+		RTC_GetTime(RTC_Format_BIN,&RTC_TimeStruct);
 		
-		hour= RTC_TimeStruct.RTC_Hours;	 	//?
-		min = RTC_TimeStruct.RTC_Minutes;	//??
-		sec	= RTC_TimeStruct.RTC_Seconds; 	//??
 		
-		year = RTC_DateStruct.RTC_Year;//??
-		month= RTC_DateStruct.RTC_Month; //??
-		date = RTC_DateStruct.RTC_Date; //??
-	//	RTC_DateStruct.RTC_WeekDay	= 3; //????
-		weekday = RTC_DateStruct.RTC_WeekDay;//????
+//		hour= RTC_TimeStruct.RTC_Hours;	 	//?
+//		min = RTC_TimeStruct.RTC_Minutes;	//??
+//		sec	= RTC_TimeStruct.RTC_Seconds; 	//??
+//		
+//		year = RTC_DateStruct.RTC_Year;//??
+//		month= RTC_DateStruct.RTC_Month; //??
+//		date = RTC_DateStruct.RTC_Date; //??
+//	//	RTC_DateStruct.RTC_WeekDay	= 3; //????
+//		weekday = RTC_DateStruct.RTC_WeekDay;//????
+		printf("日期：20%d-%d-%d: 星期：%d\r\n", RTC_DateStruct.RTC_Year,RTC_DateStruct.RTC_Month\
+				,RTC_DateStruct.RTC_Date,RTC_DateStruct.RTC_WeekDay);		
+		printf("时间：%d:%d:%d\r\n", RTC_TimeStruct.RTC_Hours,RTC_TimeStruct.RTC_Minutes,RTC_TimeStruct.RTC_Seconds);
+
 		
-		printf("日期：20%d-%d-%d: 星期：%d\r\n", year,month,date,weekday);
-		printf("时间：%d:%d:%d\r\n", hour,min,sec);
 		
 	
 		delaly_s(1);

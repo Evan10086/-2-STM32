@@ -1,6 +1,6 @@
 #include "rtc.h"
 
-#define BKP   0x2281A2
+#define BKP   0x2281A1
 
 
 void Rtc_My_Init(void)
@@ -109,6 +109,8 @@ void RTC_Alarm_AInit(void)
 
 }
 
+
+
 void RTC_Alarm_BInit(void)
 {
 	RTC_AlarmTypeDef	RTC_AlarmStruct;
@@ -124,8 +126,8 @@ void RTC_Alarm_BInit(void)
 	//闹钟时间设置
 	RTC_AlarmTime.RTC_H12		= RTC_H12_PM;  //下午
 	RTC_AlarmTime.RTC_Hours		= 15; //时
-	RTC_AlarmTime.RTC_Minutes	= 41; //分
-	RTC_AlarmTime.RTC_Seconds	= 35; //秒	
+	RTC_AlarmTime.RTC_Minutes	= 42; //分
+	RTC_AlarmTime.RTC_Seconds	= 30; //秒	
 	
 	
 	
@@ -139,7 +141,7 @@ void RTC_Alarm_BInit(void)
 	//4、开启闹钟：
 	RTC_AlarmCmd(RTC_Alarm_B,ENABLE);
 	//5、开启配置闹钟中断：
-	RTC_ITConfig(RTC_IT_ALRA, ENABLE);
+	RTC_ITConfig(RTC_IT_ALRB, ENABLE);
 
 
 
@@ -161,6 +163,7 @@ void RTC_Alarm_BInit(void)
 
 }
 
+
 //6、编写中断服务函数：
 
 void RTC_Alarm_IRQHandler(void)
@@ -178,29 +181,14 @@ void RTC_Alarm_IRQHandler(void)
 			RTC_ClearFlag(RTC_FLAG_ALRAF);
 		}
 
-		
-		//清除中断标志位
-		EXTI_ClearITPendingBit(EXTI_Line17);	
-	}
-
-}
-
-void RTC_Alarm_B_IRQHandler(void)
-{
-
-	//判断中断标志位是否置1
-	if(EXTI_GetITStatus(EXTI_Line17) == SET)
-	{
-		//判断是否是闹钟A中断标志
-		if(RTC_GetFlagStatus(RTC_FLAG_ALRAF) == SET)
+		//判断是否是闹钟B中断标志
+		if(RTC_GetFlagStatus(RTC_FLAG_ALRBF) == SET)
 		{
 		
-			LED1(1);
+			LED3(1);
 			
-			RTC_ClearFlag(RTC_FLAG_ALRAF);
-		}
-
-		
+			RTC_ClearFlag(RTC_FLAG_ALRBF);
+		}		
 		//清除中断标志位
 		EXTI_ClearITPendingBit(EXTI_Line17);	
 	}
