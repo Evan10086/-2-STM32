@@ -1,0 +1,55 @@
+1、手写你对IIC理解（至少300字）
+
+
+2、移植STM32103平台OLED显示代码到STM32F407平台。
+	a.参考图示中的OLED连接图.jpg连接好OLED
+	
+	b.修改相文件的头文件为STM32F407平台的头文件
+	
+	#include "stm32f10x.h"头文件修改为 #include "stm32f4xx.h"
+
+
+	c.使用移植核心文件中的代码（路径：D:\STM32\010\移植核心文件），移植程序
+
+	//要添加STM32F407串口1初始化
+	Usart1_Init(115200);
+
+	DelayInit();修改为STM32F407平台Delay_Init();
+	I2C_Configuration();里面的初始化修改为模拟IIC初始化（PE8 PE10）
+	OLED_Init();函数里面的延时函数修改为STM32F407的延时函数
+
+	
+	d.修改函数void WriteCmd(unsigned char I2C_Command)与void WriteDat(unsigned char I2C_Data)中的
+		I2C_WriteByte( ..... );
+		
+	void I2C_WriteByte(uint8_t addr,uint8_t data)
+	{
+	 
+		//启动信号
+		I2C_GenerateSTART(I2C1, ENABLE);//开启I2C1
+		while(!I2C_CheckEvent(I2C1, I2C_EVENT_MASTER_MODE_SELECT));/*EV5,主模式*/
+
+		//发送设备地址（一个字节）
+		I2C_Send7bitAddress(I2C1, OLED_ADDRESS, I2C_Direction_Transmitter);//器件地址 -- 默认0x78
+		//接受并判断应答信号
+		while(!I2C_CheckEvent(I2C1, I2C_EVENT_MASTER_TRANSMITTER_MODE_SELECTED));
+
+		//发送寄存器地址（一个字节）
+		I2C_SendData(I2C1, addr);//寄存器地址
+		//接受并判断应答信号
+		while (!I2C_CheckEvent(I2C1, I2C_EVENT_MASTER_BYTE_TRANSMITTED));
+
+		//发送数据（一个字节）
+		I2C_SendData(I2C1, data);//发送数据
+		//接受并判断应答信号
+		while (!I2C_CheckEvent(I2C1, I2C_EVENT_MASTER_BYTE_TRANSMITTED));
+		
+		
+		//停止信号
+		I2C_GenerateSTOP(I2C1, ENABLE);//关闭I2C1总线
+	}
+		
+	e.修改主函数当中的延时函数
+
+5、复习今天的课程内容，预习明天的课程内容。
+
